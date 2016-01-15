@@ -7,4 +7,6 @@ git clone https://github.com/acmthinks/sensor-gateway
 
 cd  sensor-gateway
 
+chmod 744 install_sensor.sh
+
 ./install_sensor.sh
