@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # Installing DHT11 libraries, courtesy of AdaFruit https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging
 sudo apt-get update
 sudo apt-get install build-essential python-dev python-openssl -y
