@@ -31,5 +31,13 @@ chmod 755 lightitup.py
 
 # Let's validate that we can get a temp reading and light up the LED
 cd ~/Adafruit_Python_DHT/examples
+echo ""
+echo "================== Temperature (C) and Humidity (courtesy of DHT11) =================="
+echo ""
 sudo ./AdafruitDHT.py 11 4
 sudo python ~/lightitup.py
+echo ""
+echo "================== Temperature (C) and Humidity (courtesy of DHT11) =================="
+
+
+cd ~
