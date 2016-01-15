@@ -17,6 +17,7 @@ cd org.eclipse.paho.mqtt.python
 sudo python setup.py install
 
 # Setting sensor data generation script as executable
+cp dht11.py ~
 cd ~
 chmod 755 dht11.py
 
@@ -24,5 +25,6 @@ chmod 755 dht11.py
 sudo pip install RPi.GPIO
 
 # Setting RPi LED script as executable
+cp lightitup.py ~
 cd ~
 chmod 755 lightitup.py
