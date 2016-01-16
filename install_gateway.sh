@@ -40,6 +40,7 @@ npm install node-red-node-weather-underground
 
 cd ~
 node-red-stop
+cp ~/sensor-gateway/.node-red/flows_raspberrypi.json ~/.node_red/
 node-red-start &
 
 #restart RPi
