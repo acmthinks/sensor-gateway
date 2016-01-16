@@ -28,7 +28,7 @@ sudo systemctl enable nodered.service
 # Let's add some other Nodes, by installing npm
 sudo apt-get install npm -y
 sudo npm install -g npm@2.x
-node-red-start
+node-red-start &
 
 #Informix Timeseries
 cd ~/.node-red
@@ -37,6 +37,11 @@ npm install node-red-contrib-timeseries
 npm install node-red-contrib-scx-ibmiotapp
 #Weather Underground
 npm install node-red-node-weather-underground
+
+cd ~
+node-red-stop
+node-red-start &
+
 #restart RPi
 #sudo shutdown -r now
 # Install Informix
