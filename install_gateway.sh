@@ -25,17 +25,17 @@ sudo systemctl daemon-reload
 #now let's enable as a system service
 sudo systemctl enable nodered.service
 
-Let's add some other Nodes, by installing npm
+# Let's add some other Nodes, by installing npm
 sudo apt-get install npm -y
 sudo npm install -g npm@2.x
+node-red-start
+
 #Informix Timeseries
 cd ~/.node-red
 npm install node-red-contrib-timeseries
 #IBM IoT Foundation
-cd ~/.node-red
 npm install node-red-contrib-scx-ibmiotapp
 #Weather Underground
-cd ~/.node-red
 npm install node-red-node-weather-underground
 #restart RPi
 #sudo shutdown -r now
