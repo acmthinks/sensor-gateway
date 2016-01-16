@@ -59,7 +59,7 @@ else:
 
 
 while True:
-  publish.single("toggle", "1", hostname="iot.eclipse.org")
+  publish.single("toggle", "1", hostname="localhost")
   humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 
   # Un-comment the line below to convert the temperature to Fahrenheit.
@@ -74,8 +74,8 @@ while True:
         temperature = temperature * 9/5.0 + 32
 	print 'Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity)
         payload = "{\"temperature\": " + str(temperature) + ", \"humidity\": " + str(humidity) + " }"
-        publish.single("sensor", payload, hostname="iot.eclipse.org")
+        publish.single("sensor", payload, hostname="localhost")
   else:
 	print 'Failed to get reading. Try again!'
 	sys.exit(1)
-  publish.single("toggle", "0", hostname="iot.eclipse.org")
+  publish.single("toggle", "0", hostname="localhost")
