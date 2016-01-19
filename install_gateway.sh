@@ -31,6 +31,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable nodered.service
 
 # Let's add some other Nodes, by installing npm
+cd ~/.node-red
 sudo apt-get install npm -y
 sudo npm install -g npm@2.x
 node-red-start &
