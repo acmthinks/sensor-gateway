@@ -12,5 +12,7 @@ git clone https://github.com/acmthinks/sensor-gateway
 cd  sensor-gateway
 
 chmod 744 *.sh
+
 ./install_gateway.sh
+
 ./install_sensor.sh
