@@ -41,10 +41,9 @@ then
   sudo chmod 644 $INFORMIXDIR/etc/inf.env
   sudo chown informix:informix $INFORMIXDIR/etc/inf.env
   
-  #sudo -u informix cp $INFORMIXDIR/etc/onconfig.std $INFORMIXDIR/etc/onconfig
   sudo cp $INFORMIXDIR/etc/sqlhosts.demo $INFORMIXDIR/etc/sqlhosts
 
-  sudo cp ~/sensor-gateway/onconfig $INFORMIXDIR/etc/onconfig 
+  sudo cp /home/pi/sensor-gateway/onconfig $INFORMIXDIR/etc/onconfig 
   sudo chmod 644 $INFORMIXDIR/etc/onconfig
   sudo chown informix:informix $INFORMIXDIR/etc/onconfig
   sudo bash -c "echo 'ol_informix1210   onsoctcp   localhost   9088' >> $INFORMIXDIR/etc/sqlhosts"
@@ -55,20 +54,15 @@ then
   
   #Start Informix 
   sudo bash -c ". $INFORMIXDIR/etc/inf.env;oninit -iwy"
-fi 
 
-#Enable the wire listener for REST calls
-#cp $INFORMIXDIR/etc/jsonListener-example.properties  rest.properties
-#vi $INFORMIXDIR/etc/rest.properties
+  #Enable the wire listener for REST calls
+  sudo cp /home/pi/sensor-gateway/rest.properties /$INFORMIXDIR/etc/rest.properties
+  sudo chown informix:informix /$INFORMIXDIR/etc/rest.properties
+  sudo chmod 664 /$INFORMIXDIR/etc/rest.properties
 
-#Uncomment and update the listener type (the default is "mongo" but change it to "rest")
-#listener.type=rest
+  #Start the wire listener
+  sudo bash -c "java -cp $INFORMIXDIR/bin/jsonListener.jar com.ibm.nosql.server.ListenerCLI -config $INFORMIXDIR/etc/rest.properties -logfile $INFORMIXDIR/tmp/restListener.log -start &"
 
-
-
-
-#Start the wire listener
-#java -cp $INFORMIXDIR/bin/jsonListener.jar com.ibm.nosql.server.ListenerCLI -config $INFORMIXDIR/etc/rest.properties -logfile $INFORMIXDIR/tmp/restListener.log -start &
-
-#fyi, to stop the wire listener
-#java -cp $INFORMIXDIR/bin/jsonListener.jar com.ibm.nosql.server.ListenerCLI -config $INFORMIXDIR/etc/rest.properties -hostname localhost -stop 
+  #fyi, to stop the wire listener
+  #java -cp $INFORMIXDIR/bin/jsonListener.jar com.ibm.nosql.server.ListenerCLI -config $INFORMIXDIR/etc/rest.properties -hostname localhost -stop 
+fi
