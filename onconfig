@@ -210,7 +210,7 @@ ONDBSPACEDOWN 2
 SERVERNUM 0
 DBSERVERNAME ol_informix1210 
 DBSERVERALIASES
-FULL_DISK_INIT 0
+FULL_DISK_INIT 1
 
 ###################################################################
 # Network Configuration Parameters
