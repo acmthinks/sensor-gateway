@@ -37,6 +37,9 @@ then
   export INFORMIXDIR=/opt/IBM/informix
   export PATH=$PATH:$INFORMIXDIR/bin
   export INFORMIXSERVER=ol_informix1210
+  sudo cp ~/sensor-gateway/inf.env $INFORMIXDIR/etc/inf.env 
+  sudo chmod 644 $INFORMIXDIR/etc/inf.env
+  sudo chown informix:informix $INFORMIXDIR/etc/inf.env
   
   #sudo -u informix cp $INFORMIXDIR/etc/onconfig.std $INFORMIXDIR/etc/onconfig
   sudo cp $INFORMIXDIR/etc/sqlhosts.demo $INFORMIXDIR/etc/sqlhosts
@@ -50,7 +53,7 @@ then
   sudo chmod 660 /opt/IBM/ifxdata/rootdbs
   
   #Start Informix 
-  sudo bash -c ". ~/sensor-gateway/inf.env;oninit -iwy"
+  sudo bash -c ". $INFORMIXDIR/etc/inf.env;oninit -iwy"
 fi 
 
 #Enable the wire listener for REST calls
