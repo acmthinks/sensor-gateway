@@ -28,6 +28,8 @@ then
   sudo chown informix:informix /opt/IBM/ifxdata
   sudo chmod 770 /opt/IBM/ifxdata
 
+  sudo apt-get install libaio1
+  
   # Setup Informix variables
   export INFORMIXDIR=/opt/IBM/informix
   export PATH=$PATH:$INFORMIXDIR/bin
@@ -43,6 +45,8 @@ then
   sudo bash -c "echo 'export INFORMIXSQLHOSTS=/opt/IBM/informix/etc/sqlhosts' >> /home/informix/.bashrc"
 
   sudo cp $INFORMIXDIR/etc/sqlhosts.demo $INFORMIXDIR/etc/sqlhosts
+  sudo chmod 644 $INFORMIXDIR/etc/sqlhosts
+  sudo chown informix:informix $INFORMIXDIR/etc/sqlhosts
 
   sudo cp /home/pi/sensor-gateway/onconfig $INFORMIXDIR/etc/onconfig 
   sudo chmod 644 $INFORMIXDIR/etc/onconfig
@@ -53,8 +57,9 @@ then
   sudo chown informix:informix /opt/IBM/ifxdata/rootdbs
   sudo chmod 660 /opt/IBM/ifxdata/rootdbs
   
-  #Start Informix 
+    #Start Informix 
   sudo bash -c ". $INFORMIXDIR/etc/inf.env;oninit -iwy"
+  #echo "EXECUTE FUNCTION task('modify chunk extendable', '1')" | dbaccess sysadmin -
 
   #Enable the wire listener for REST calls
   sudo cp /home/pi/sensor-gateway/rest.properties /$INFORMIXDIR/etc/rest.properties
