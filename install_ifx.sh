@@ -50,6 +50,7 @@ then
   sudo bash -c "echo 'ol_informix1210   onsoctcp   localhost   9088' >> $INFORMIXDIR/etc/sqlhosts"
 
   sudo touch /opt/IBM/ifxdata/rootdbs
+  sudo chown informix:informix /opt/IBM/ifxdata/rootdbs
   sudo chmod 660 /opt/IBM/ifxdata/rootdbs
   
   #Start Informix 
