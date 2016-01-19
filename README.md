@@ -3,12 +3,14 @@ Intended for Raspberry Pi 2, Python code and collateral to setup a sensor data g
 
 Requires: Raspbian "Jessie" (2015-11-21, Kernal 4.1)
 
+logon as pi
+
 cd /home/pi
 
 git clone https://github.com/acmthinks/sensor-gateway
 
 cd  sensor-gateway
 
-chmod 744 install_sensor.sh
-
+chmod 744 *.sh
+./install_gateway.sh
 ./install_sensor.sh
