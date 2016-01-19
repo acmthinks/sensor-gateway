@@ -50,7 +50,7 @@ then
   sudo chmod 660 /opt/IBM/ifxdata/rootdbs
   
   #Start Informix 
-  oninit -iv
+  sudo bash -c ". ~/sensor-gateway/inf.env;oninit -iwy"
 fi 
 
 #Enable the wire listener for REST calls
