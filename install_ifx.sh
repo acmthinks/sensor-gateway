@@ -28,19 +28,20 @@ then
   sudo chown informix:informix /opt/IBM/ifxdata
   sudo chmod 770 /opt/IBM/ifxdata
 
-  # Append the following lines to /home/informix/.bashrc
-  sudo bash -c "echo 'export INFORMIXDIR=/opt/IBM/informix' >> /home/informix/.bashrc"
-  sudo bash -c "echo 'export PATH=$PATH:$INFORMIXDIR/bin' >> /home/informix/.bashrc"
-  sudo bash -c "echo 'export INFORMIXSERVER=ol_informix1210' >> /home/informix/.bashrc"
-
   # Setup Informix variables
   export INFORMIXDIR=/opt/IBM/informix
   export PATH=$PATH:$INFORMIXDIR/bin
   export INFORMIXSERVER=ol_informix1210
+  export INFORMIXSQLHOSTS=$INFORMIXDIR/etc/sqlhosts
   sudo cp ~/sensor-gateway/inf.env $INFORMIXDIR/etc/inf.env 
   sudo chmod 644 $INFORMIXDIR/etc/inf.env
   sudo chown informix:informix $INFORMIXDIR/etc/inf.env
-  
+    # Append the following lines to /home/informix/.bashrc
+  sudo bash -c "echo 'export INFORMIXDIR=/opt/IBM/informix' >> /home/informix/.bashrc"
+  sudo bash -c "echo 'export PATH=/opt/IBM/informix/bin:$PATH' >> /home/informix/.bashrc"
+  sudo bash -c "echo 'export INFORMIXSERVER=ol_informix1210' >> /home/informix/.bashrc"
+  sudo bash -c "echo 'export INFORMIXSQLHOSTS=/opt/IBM/informix/etc/sqlhosts' >> /home/informix/.bashrc"
+
   sudo cp $INFORMIXDIR/etc/sqlhosts.demo $INFORMIXDIR/etc/sqlhosts
 
   sudo cp /home/pi/sensor-gateway/onconfig $INFORMIXDIR/etc/onconfig 
