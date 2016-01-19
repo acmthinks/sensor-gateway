@@ -14,6 +14,11 @@ sudo apt-get install mosquitto -y
 sudo update-rc.d mosquitto defaults
 sudo /etc/init.d/mosquitto start
 
+#update node-red
+cd ~
+sudo apt-get update
+sudo apt-get install nodered -y
+
 # Setting up Node-RED as a service
 cd ~
 sudo wget https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/nodered.service -O /lib/systemd/system/nodered.service
@@ -40,7 +45,7 @@ npm install node-red-node-weather-underground
 
 cd ~
 node-red-stop
-cp ~/sensor-gateway/.node-red/flows_raspberrypi.json ~/.node_red/
+cp ~/sensor-gateway/.node-red/flows_raspberrypi.json ~/.node-red/
 node-red-start &
 
 #restart RPi
