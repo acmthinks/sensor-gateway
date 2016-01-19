@@ -39,8 +39,8 @@
 #          avoid disk corruption of another instance
 ###################################################################
 
-ROOTNAME /opt/IBM/ifxdata/rootdbs
-ROOTPATH $INFORMIXDIR/tmp/demo_on.rootdbs
+ROOTNAME rootdbs
+ROOTPATH /opt/IBM/ifxdata/rootdbs
 ROOTOFFSET 0
 ROOTSIZE 300000
 MIRROR 0
