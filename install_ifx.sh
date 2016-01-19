@@ -4,7 +4,7 @@
 cd ~
 
 #let's check to make sure the Informix binary is present
-if [ -e ~/ids.12.10.UC6DE.Linux-ARM6.tar]
+if [ -e ~/ids.12.10.UC6DE.Linux-ARM6.tar ]
 then 
   mkdir /tmp/ifxinstall
   cd /tmp/ifxinstall
