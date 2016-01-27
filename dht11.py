@@ -25,13 +25,13 @@
 # Folded in MQTT Python library from Paho and interleaved publish to topics.
 # Publishing to the "toggle" topic will send a signal to the MQTT gateway turn on/off an LED
 # Publishing to the "sensor" topic will send temperature and humidity readings to the MQTT gateway
-# Message payload example: {"sensor_id": 22, "timestamp": 2016-01-27 20:01:28, "temperature": 77.0, "humidity": 22.2 }
 
 #Modifications 
 import sys
+import netifaces as ni 
 import re
 import datetime
-import netifaces as ni
+import time
 import Adafruit_DHT
 
 try:
@@ -57,17 +57,13 @@ else:
 	print 'example: sudo ./Adafruit_DHT.py 2302 4 - Read from an AM2302 connected to GPIO #4'
 	sys.exit(1)
 
-### Construct the message payload with sensor_id (based on ip), timestamp (based on current time), temp and humidty (based on sensor reading) 
-# The sensor id will be the last ip octet, this can be subbed out to be a different value (whatever you like)
+#Let's use the last octet of our ip address as a "sensor identifier"
 ni.ifaddresses('wlan0')
 ip = ni.ifaddresses('wlan0')[2][0]['addr']
 ipRegex = re.compile(r'(.*)\.(.*)\.(.*)\.(.*)')
 ipOctets = ipRegex.search(ip)
 #grab the last octet, and make that the sensor id
 sensor_id = ipOctets.group(4)
-
-#get the current timestamp
-timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
 # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
@@ -86,8 +82,11 @@ while True:
         # Un-comment the line below to convert the temperature to Fahrenheit.
         temperature = temperature * 9/5.0 + 32
 	print 'Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity)
+        #get the current timestamp
+        timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
         payload = "{\"sensor_id\": " + str(sensor_id) + ", \"timestamp\": " + str(timestamp) + ", \"temperature\": " + str(temperature) + ", \"humidity\": " + str(humidity) + " }"
         publish.single("sensor", payload, hostname="localhost")
+        time.sleep(5)
   else:
 	print 'Failed to get reading. Try again!'
 	sys.exit(1)
