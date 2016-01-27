@@ -20,28 +20,28 @@ INSERT INTO CalendarPatterns values ( 'Daily_15min', '{1 on , 14 off}, minute');
 insert into CalendarTable(c_name, c_calendar) values ('Daily_15min', 'startdate(2016-01-14 14:00:00), pattstart(2016-01-14 14:00:00), pattname(Daily_15min)');
 
   -- Create TimeSeries row type for sensor data
-create row type temp_reading(timestamp datetime year to fraction(5), Temp real);
+create row type sensor_reading(timestamp datetime year to fraction(5), Temp real, Humidity real);
 
   -- Create table to store sensor data
 create table thermometer(
 sensor_id int,
-sensor_data TimeSeries(temp_reading));
+sensor_data TimeSeries(sensor_reading));
 
   -- Create a dedicated container to optimally store and retrieve sensor data
 execute procedure TSContainerCreate
-('TSContainer', 'rootdbs','temp_reading', 1024, 1024);
+('TSContainer', 'rootdbs','sensor_reading', 1024, 1024);
 
   -- Initialize a TimeSeries record for *each* sensor 
-INSERT INTO thermometer VALUES(101, "origin(2016-01-14 14:00:00.00000), calendar(Daily_15min), container(TSContainer), threshold(0),regular,[]");
+--INSERT INTO thermometer VALUES(101, "origin(2016-01-14 14:00:00.00000), calendar(Daily_15min), container(TSContainer), threshold(0),regular,[]");
 
   -- Create a virtual table 
 execute procedure tscreatevirtualtab('thermometer_vti','thermometer');
 
   -- Create sample data 
-insert into thermometer_vti values( 101, "2016-01-14 14:00:00"::DATETIME YEAR TO FRACTION(5),78);
-insert into thermometer_vti values( 101, "2016-01-14 14:15:00"::DATETIME YEAR TO FRACTION(5),79);
-insert into thermometer_vti values( 101, "2016-01-14 14:30:00"::DATETIME YEAR TO FRACTION(5),78);
-insert into thermometer_vti values( 101, "2016-01-14 14:45:00"::DATETIME YEAR TO FRACTION(5),80);
+--insert into thermometer_vti values( 101, "2016-01-14 14:00:00"::DATETIME YEAR TO FRACTION(5),78,33);
+--insert into thermometer_vti values( 101, "2016-01-14 14:15:00"::DATETIME YEAR TO FRACTION(5),79,33);
+--insert into thermometer_vti values( 101, "2016-01-14 14:30:00"::DATETIME YEAR TO FRACTION(5),78,32);
+--insert into thermometer_vti values( 101, "2016-01-14 14:45:00"::DATETIME YEAR TO FRACTION(5),80,31);
 
  GRANT RESOURCE TO PUBLIC;
  GRANT ALL PRIVILEGES ON thermometer TO root, informix;
