@@ -16,6 +16,13 @@ git clone http://git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.python.git
 cd org.eclipse.paho.mqtt.python
 sudo python setup.py install
 
+# Installing Python libraries
+cd /tmp
+wget https://pypi.python.org/packages/source/n/netifaces/netifaces-0.10.4.tar.gz#md5=36da76e2cfadd24cc7510c2c0012eb1e
+tar xvzf netifaces-0.10.4.tar.gz
+cd netifaces-0.10.4
+sudo python setup.py install
+
 # Setting sensor data generation script as executable
 cd ~
 cp ~/sensor-gateway/dht11.py ~
