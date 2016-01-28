@@ -44,14 +44,13 @@ then
   sudo bash -c "echo 'export INFORMIXSERVER=ol_informix1210' >> /home/informix/.bashrc"
   sudo bash -c "echo 'export INFORMIXSQLHOSTS=/opt/IBM/informix/etc/sqlhosts' >> /home/informix/.bashrc"
 
-  sudo cp $INFORMIXDIR/etc/sqlhosts.demo $INFORMIXDIR/etc/sqlhosts
+  sudo cp /home/pi/sensor-gateway/sqlhosts $INFORMIXDIR/etc/sqlhosts
   sudo chmod 644 $INFORMIXDIR/etc/sqlhosts
   sudo chown informix:informix $INFORMIXDIR/etc/sqlhosts
 
   sudo cp /home/pi/sensor-gateway/onconfig $INFORMIXDIR/etc/onconfig 
   sudo chmod 644 $INFORMIXDIR/etc/onconfig
   sudo chown informix:informix $INFORMIXDIR/etc/onconfig
-  sudo bash -c "echo 'ol_informix1210   onsoctcp   localhost   9088' >> $INFORMIXDIR/etc/sqlhosts"
 
   sudo touch /opt/IBM/ifxdata/rootdbs
   sudo chown informix:informix /opt/IBM/ifxdata/rootdbs
