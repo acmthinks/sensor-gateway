@@ -36,22 +36,26 @@ sudo apt-get install npm -y
 sudo npm install -g npm@2.x
 node-red-start &
 
-#Informix Timeseries
+#Informix Timeseries nodes
 cd ~/.node-red
 npm install node-red-contrib-timeseries
-#IBM IoT Foundation
-npm install node-red-contrib-scx-ibmiotapp
-#Weather Underground
+#Weather Underground nodes
 npm install node-red-node-weather-underground
 
+#Bounce Node-RED
 cd ~
 node-red-stop
 cp ~/sensor-gateway/.node-red/flows_raspberrypi.json ~/.node-red/
 cp -r ~/node_modules/ ~/.node-red/
 node-red-start &
 
-#restart RPi
-#sudo shutdown -r now
-# Install Informix
-# Configure Informix Wire Listener (REST)
-# Add Node-RED flow
+#Install Informix
+#PRE-REQ: Informix binary install must be placed in /home/pi; The Informix binary must be downloaded at the following URL (please, accept IBM terms)
+# https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=ifxids
+#Be sure to choose "Informix Developer Edition for Linux ARM v6 32 (Raspberry PI) Version  12.10UC6DE "
+cd ~/sensor-gateway
+./install_ifx.sh
+
+#Create TimeSeries db to store sensor data
+./createSensorDB.sh
+
