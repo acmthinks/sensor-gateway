@@ -49,19 +49,22 @@ cp ~/sensor-gateway/.node-red/flows_raspberrypi.json ~/.node-red/
 cp -r ~/node_modules/ ~/.node-red/
 node-red-start &
 
-#Install Informix
-#PRE-REQ: Informix binary install must be placed in /home/pi; The Informix binary must be downloaded at the following URL (please, accept IBM terms)
-# https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=ifxids
-#Be sure to choose "Informix Developer Edition for Linux ARM v6 32 (Raspberry PI) Version  12.10UC6DE " and place in /home/pi
-mkdir ~/iot-gateway-kit-depend
-mv ~/ids.12.10.UC6DE.Linux-ARM6.tar ~/iot-gateway-kit-depend/ids.12.10.UC6DE.Linux-ARM6.tar
-#Let's use the IBM-IoT Kit to install Informix
-cd ~
-git clone https://github.com/IBM-IoT/iot-gateway-kit
-cd ~/iot-gateway-kit
-cp ~/sensor-gateway/install_informix.sh ~/iot-gateway-kit/pi/install/install_informix.sh
-chmod 755 ~/iot-gateway-kit/pi/install/install_informix.sh
-. ~/iot-gateway-kit/pi/install/install_informix.sh
+if [ ! -d ~/iot-gateway-kit ]
+then
+  #Install Informix
+  #PRE-REQ: Informix binary install must be placed in /home/pi; The Informix binary must be downloaded at the following URL (please, accept IBM terms)
+  # https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=ifxids
+  #Be sure to choose "Informix Developer Edition for Linux ARM v6 32 (Raspberry PI) Version  12.10UC6DE " and place in /home/pi
+  mkdir ~/iot-gateway-kit-depend
+  mv ~/ids.12.10.UC6DE.Linux-ARM6.tar ~/iot-gateway-kit-depend/ids.12.10.UC6DE.Linux-ARM6.tar
+  #Let's use the IBM-IoT Kit to install Informix
+  cd ~
+  git clone https://github.com/IBM-IoT/iot-gateway-kit
+  cd ~/iot-gateway-kit
+  cp ~/sensor-gateway/install_informix.sh ~/iot-gateway-kit/pi/install/install_informix.sh
+  chmod 755 ~/iot-gateway-kit/pi/install/install_informix.sh
+  . ~/iot-gateway-kit/pi/install/install_informix.sh
+fi
 
 #Create TimeSeries db to store sensor data
 #./createSensorDB.sh
