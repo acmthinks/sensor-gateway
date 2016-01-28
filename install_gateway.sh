@@ -53,9 +53,10 @@ node-red-start &
 #PRE-REQ: Informix binary install must be placed in /home/pi; The Informix binary must be downloaded at the following URL (please, accept IBM terms)
 # https://www-01.ibm.com/marketing/iwm/iwm/web/reg/pick.do?source=ifxids
 #Be sure to choose "Informix Developer Edition for Linux ARM v6 32 (Raspberry PI) Version  12.10UC6DE "
-cd ~/sensor-gateway
-./install_ifx.sh
+#cd ~/sensor-gateway
+#./install_ifx.sh
 
 #Create TimeSeries db to store sensor data
-./createSensorDB.sh
+#./createSensorDB.sh
 
+cd ~
