@@ -86,6 +86,7 @@ while True:
         timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
         payload = "{\"sensor_id\": " + str(sensor_id) + ", \"timestamp\": " + str(timestamp) + ", \"temperature\": " + str(temperature) + ", \"humidity\": " + str(humidity) + " }"
         publish.single("sensor", payload, hostname="localhost")
+        publish.single("toggle", "0", hostname="localhost")
         time.sleep(5)
   else:
 	print 'Failed to get reading. Try again!'
