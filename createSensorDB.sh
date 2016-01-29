@@ -2,48 +2,61 @@
 
 export PATH=$PATH:.
 
+#UTC
+dt=`date -u +"%Y-%m-%d %H:%M:%S.00000"`
+# non-UTC
+dt=`date  +"%Y-%m-%d %H:%M:%S.00000"`
+
+
+
 dbaccess sysmaster - <<!
-  -- Create database
+
 drop database if exists sensordb;
-create database sensordb in rootdbs with buffered log;
+create database sensordb in datadbs1 with buffered log ;
 !
 
 dbaccess sensordb - <<!
 
-drop table if exists thermometer;
-drop table if exists thermometer_vti;
+drop table if exists sensor;
+drop table if exists sensor_vti;
+drop row type if exists sensor_row_t restrict;
 
-  -- Create generic calendar pattern for regular intervals: daily, every 15 minutes
-INSERT INTO CalendarPatterns values ( 'Daily_15min', '{1 on , 14 off}, minute');
 
-  -- Create calendar (to be used with TimeSeries database) with the pattern defined above
-insert into CalendarTable(c_name, c_calendar) values ('Daily_15min', 'startdate(2016-01-14 14:00:00), pattstart(2016-01-14 14:00:00), pattname(Daily_15min)');
+insert into calendartable(c_name, c_calendar)
+     values ("ts_5sec", 'startdate($dt), pattstart($dt), pattern( {5 on} second)' );
 
-  -- Create TimeSeries row type for sensor data
-create row type sensor_reading(timestamp datetime year to fraction(5), Temp real, Humidity real);
 
-  -- Create table to store sensor data
-create table thermometer(
-sensor_id int,
-sensor_data TimeSeries(sensor_reading));
+create row type sensor_row_t
+(
+   tstamp       datetime year to fraction(5),
+   json_data     bson
+);
 
-  -- Create a dedicated container to optimally store and retrieve sensor data
-execute procedure TSContainerCreate
-('TSContainer', 'rootdbs','sensor_reading', 1024, 1024);
+create table sensor
+(
+   id           varchar(255) not null primary key,
+   data         timeseries(sensor_row_t)
 
-  -- Initialize a TimeSeries record for *each* sensor 
---INSERT INTO thermometer VALUES(101, "origin(2016-01-14 14:00:00.00000), calendar(Daily_15min), container(TSContainer), threshold(0),regular,[]");
+);
 
-  -- Create a virtual table 
-execute procedure tscreatevirtualtab('thermometer_vti','thermometer');
 
-  -- Create sample data 
---insert into thermometer_vti values( 101, "2016-01-14 14:00:00"::DATETIME YEAR TO FRACTION(5),78,33);
---insert into thermometer_vti values( 101, "2016-01-14 14:15:00"::DATETIME YEAR TO FRACTION(5),79,33);
---insert into thermometer_vti values( 101, "2016-01-14 14:30:00"::DATETIME YEAR TO FRACTION(5),78,32);
---insert into thermometer_vti values( 101, "2016-01-14 14:45:00"::DATETIME YEAR TO FRACTION(5),80,31);
 
- GRANT RESOURCE TO PUBLIC;
- GRANT ALL PRIVILEGES ON thermometer TO root, informix;
- GRANT ALL PRIVILEGES ON thermometer_vti TO root, informix;
+
+execute procedure tscontainercreate('sens_cont1','datadbs1','sensor_row_t', 1024, 1024);
+
+
+
+
+
+
+execute procedure tscreatevirtualtab('sensor_vti',
+        'sensor',
+        'calendar(ts_5sec), origin($dt), irregular'
+        );
+
+
+{
+insert into sensor values ('1',tscreateirr('ts_5sec','$dt', 0,0,0,'sens_cont1'));
+}
+
 !
