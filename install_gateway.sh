@@ -68,5 +68,8 @@ fi
 #Create TimeSeries db to store sensor data
 cd ~/sensor-gateway
 ./createSensorDB.sh
+
+#Start REST listener
+cd ~/iot-gateway-kit/scripts
 sudo bash -c ". ~informix/inf.env;. ~informix/REST/start.rest /var/run/start.rest.pid
 cd ~
