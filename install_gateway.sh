@@ -66,6 +66,6 @@ then
 fi
 
 #Create TimeSeries db to store sensor data
-./createSensorDB.sh
+. ~/createSensorDB.sh
 
 cd ~
