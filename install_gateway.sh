@@ -61,9 +61,8 @@ then
   cd ~
   git clone https://github.com/IBM-IoT/iot-gateway-kit
   cd ~/iot-gateway-kit
-  cp ~/sensor-gateway/install_informix.sh ~/iot-gateway-kit/pi/install_informix.sh
-  chmod 755 ~/iot-gateway-kit/pi/install_informix.sh
-  . ~/iot-gateway-kit/pi/install_informix.sh
+  cp ~/sensor-gateway/install_informix.sh ~/iot-gateway-kit/pi/install
+  . ~/iot-gateway-kit/iot_install
 fi
 
 #Create TimeSeries db to store sensor data
